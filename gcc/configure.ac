@@ -2851,7 +2851,7 @@ fi])
 AC_MSG_CHECKING(Solaris linker)
 case $target in
   *-*-solaris2*)
-    if $gcc_cv_ld -V 2>/dev/null | grep 'Solaris Link Editors' > /dev/null; then
+    if $gcc_cv_ld -V 2>&1 | grep 'Solaris Link Editors' > /dev/null; then
       gnu_ld=no
       solaris_ld=yes
     elif $gcc_cv_ld --version 2>/dev/null | grep GNU > /dev/null; then
@@ -3337,9 +3337,9 @@ changequote(,)dnl
 	# numbers can be used in ld.so.1 feature checks even if a different
 	# linker is configured.
 	ld_ver=`$gcc_cv_ld -V 2>&1`
-	if echo "$ld_ver" | grep 'Solaris Link Editors' > /dev/null; then
-	  ld_vers=`echo $ld_ver | sed -n \
-	    -e 's,^.*: 5\.[0-9][0-9]*-\([0-9]\.[0-9][0-9]*\).*$,\1,p'`
+	if echo "$ld_ver" | $EGREP 'Solaris Link Editors|Solaris ELF Utilities' > /dev/null; then
+	  ld_vers=`echo $ld_ver | /bin/sed -n \
+	    -E 's,^.*: (5|1[0-9])\.[0-9][0-9]*-([0-9]\.[0-9][0-9]*).*$,\2,p'`
 	  ld_vers_major=`expr "$ld_vers" : '\([0-9]*\)'`
 	  ld_vers_minor=`expr "$ld_vers" : '[0-9]*\.\([0-9]*\)'`
 	fi
