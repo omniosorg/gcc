@@ -21318,6 +21318,12 @@ The default setting is @samp{tpidr_el0}.  It is recommended to compile all
 code intended to interoperate with the same value of this option to avoid
 accessing a different thread pointer from the wrong exception level.
 
+@opindex msave-args
+@item -msave-args
+Save integer-sized arguments on the stack on function entry.  This keeps the
+prologue at the start of the function, so @option{-fshrink-wrap} and
+@option{-fshrink-wrap-separate} have no effect.
+
 @opindex mstrict-align
 @opindex mno-strict-align
 @item -mstrict-align
