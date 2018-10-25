@@ -600,7 +600,7 @@ static const struct default_options default_options_table[] =
     { OPT_LEVELS_1_PLUS, OPT_fipa_reference_addressable, NULL, 1 },
     { OPT_LEVELS_1_PLUS, OPT_fjump_tables, NULL, 1 },
     { OPT_LEVELS_1_PLUS, OPT_fmerge_constants, NULL, 1 },
-    { OPT_LEVELS_1_PLUS, OPT_fomit_frame_pointer, NULL, 1 },
+    { OPT_LEVELS_1_PLUS, OPT_fomit_frame_pointer, NULL, 0 },
     { OPT_LEVELS_1_PLUS, OPT_freorder_blocks, NULL, 1 },
     { OPT_LEVELS_1_PLUS, OPT_fshrink_wrap, NULL, 1 },
     { OPT_LEVELS_1_PLUS, OPT_fsplit_wide_types, NULL, 1 },
@@ -635,6 +635,7 @@ static const struct default_options default_options_table[] =
     { OPT_LEVELS_1_PLUS_NOT_DEBUG, OPT_ftree_dse, NULL, 1 },
     { OPT_LEVELS_1_PLUS_NOT_DEBUG, OPT_ftree_pta, NULL, 1 },
     { OPT_LEVELS_1_PLUS_NOT_DEBUG, OPT_ftree_sra, NULL, 1 },
+
 
     /* -O2 and -Os optimizations.  */
     { OPT_LEVELS_2_PLUS, OPT_fcaller_saves, NULL, 1 },
