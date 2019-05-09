@@ -304,12 +304,15 @@ along with GCC; see the file COPYING3.  If not see
   "%{Ofast|ffast-math|funsafe-math-optimizations:%{!shared:crtfastmath.o%s}} \
    %(endfile_arch) %(endfile_vtv) %(endfile_crtend) crtn.o%s"
 
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+#define GNUCMAJOR TOSTRING(__GNUC__)
+
 #undef LINK_ARCH32_SPEC_BASE
 #define LINK_ARCH32_SPEC_BASE \
   "%{YP,*} \
    %{R*} \
-   %{!YP,*:%{p|pg:-Y P,%R/usr/lib/libp%R/lib:%R/usr/lib} \
-	   %{!p:%{!pg:-Y P,%R/lib:%R/usr/lib}}}"
+   %{!YP,*:-Y P,%R/usr/gcc/" GNUCMAJOR "/lib:%R/lib:%R/usr/lib -L %R/usr/gcc/" GNUCMAJOR "/lib -R %R/usr/gcc/" GNUCMAJOR "/lib}"
 
 #undef LINK_ARCH32_SPEC
 #define LINK_ARCH32_SPEC LINK_ARCH32_SPEC_BASE
@@ -320,8 +323,7 @@ along with GCC; see the file COPYING3.  If not see
 #define LINK_ARCH64_SPEC_BASE \
   "%{YP,*} \
    %{R*} \
-   %{!YP,*:%{p|pg:-Y P,%R/usr/lib/libp/" ARCH64_SUBDIR ":%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR "}	\
-	   %{!p:%{!pg:-Y P,%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR "}}}"
+   %{!YP,*:-Y P,%R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR ":%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR " -L %R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR " -R %R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR "}"
 
 #undef LINK_ARCH64_SPEC
 #ifndef USE_GLD
