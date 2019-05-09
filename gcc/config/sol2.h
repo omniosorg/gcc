@@ -308,8 +308,7 @@ along with GCC; see the file COPYING3.  If not see
 #define LINK_ARCH32_SPEC_BASE \
   "%{YP,*} \
    %{R*} \
-   %{!YP,*:%{p|pg:-Y P,%R/usr/lib/libp%R/lib:%R/usr/lib} \
-	   %{!p:%{!pg:-Y P,%R/lib:%R/usr/lib}}}"
+   %{!YP,*:-Y P,%R/usr/gcc/13/lib:%R/lib:%R/usr/lib -L %R/usr/gcc/13/lib -R %R/usr/gcc/13/lib}"
 
 #undef LINK_ARCH32_SPEC
 #define LINK_ARCH32_SPEC LINK_ARCH32_SPEC_BASE
@@ -320,8 +319,7 @@ along with GCC; see the file COPYING3.  If not see
 #define LINK_ARCH64_SPEC_BASE \
   "%{YP,*} \
    %{R*} \
-   %{!YP,*:%{p|pg:-Y P,%R/usr/lib/libp/" ARCH64_SUBDIR ":%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR "}	\
-	   %{!p:%{!pg:-Y P,%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR "}}}"
+   %{!YP,*:-Y P,%R/usr/gcc/13/lib/" ARCH64_SUBDIR ":%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR " -L %R/usr/gcc/13/lib/" ARCH64_SUBDIR " -R %R/usr/gcc/13/lib/" ARCH64_SUBDIR "}"
 
 #undef LINK_ARCH64_SPEC
 #ifndef USE_GLD
