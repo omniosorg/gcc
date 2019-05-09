@@ -283,10 +283,32 @@ along with GCC; see the file COPYING3.  If not see
   "%{Ofast|ffast-math|funsafe-math-optimizations:%{!shared:crtfastmath.o%s}} \
    %(endfile_arch) %(endfile_vtv) %(endfile_crtend) crtn.o%s"
 
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+#define GNUCMAJOR TOSTRING(__GNUC__)
+
+/* The compiler's own runtime libraries live under /usr/gcc on OmniOS, and
+   that directory must be searched before the system library directories.
+   These are the only parts of the link spec that still vary with the
+   multilib.  */
+#define LINK_ARCH32_PATH_SPEC \
+  "%{!YP,*:-Y P,%R/usr/gcc/" GNUCMAJOR "/lib:%R/lib:%R/usr/lib -L %R/usr/gcc/" GNUCMAJOR "/lib -R %R/usr/gcc/" GNUCMAJOR "/lib}"
+
+/* This should be the same as LINK_ARCH32_PATH_SPEC, except with
+   ARCH64_SUBDIR appended to the paths.  */
+#define LINK_ARCH64_PATH_SPEC \
+  "%{!YP,*:-Y P,%R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR ":%R/lib/" ARCH64_SUBDIR ":%R/usr/lib/" ARCH64_SUBDIR " -L %R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR " -R %R/usr/gcc/" GNUCMAJOR "/lib/" ARCH64_SUBDIR "}"
+
+#define LINK_ARCH_DEFAULT_PATH_SPEC \
+(DEFAULT_ARCH32_P ? LINK_ARCH32_PATH_SPEC : LINK_ARCH64_PATH_SPEC)
+
 #undef LINK_ARCH_SPEC_BASE
 #define LINK_ARCH_SPEC_BASE \
   "%{YP,*} \
-   %{R*}"
+   %{R*} \
+   %{m32:%(link_arch32_path)} \
+   %{m64:%(link_arch64_path)} \
+   %{!m32:%{!m64:%(link_arch_default_path)}}"
 
 #if HAVE_SOLARIS_LD
 #define LINK_ARCH_SPEC_1 \
@@ -327,6 +349,9 @@ along with GCC; see the file COPYING3.  If not see
   { "startfile_arch",	 	STARTFILE_ARCH_SPEC },		\
   { "startfile_crtbegin",	STARTFILE_CRTBEGIN_SPEC },	\
   { "startfile_vtv",		STARTFILE_VTV_SPEC },		\
+  { "link_arch32_path",		LINK_ARCH32_PATH_SPEC },	\
+  { "link_arch64_path",		LINK_ARCH64_PATH_SPEC },	\
+  { "link_arch_default_path",	LINK_ARCH_DEFAULT_PATH_SPEC },	\
   { "link_arch",	 	LINK_ARCH_SPEC },		\
   { "endfile_arch",	 	ENDFILE_ARCH_SPEC },		\
   { "endfile_crtend",		ENDFILE_CRTEND_SPEC },		\
