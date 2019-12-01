@@ -3247,6 +3247,7 @@ changequote(,)dnl
     fi
     case "$target" in
       i[34567]86-*-*)
+	tls_as_opt="$tls_as_opt --32"
 	conftest_s="$conftest_s
 foo:	.long	25
 	.text
