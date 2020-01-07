@@ -195,8 +195,14 @@ along with GCC; see the file COPYING3.  If not see
 #undef STARTFILE_ARCH_SPEC
 #define STARTFILE_ARCH_SPEC \
   "%{!shared:%{!symbolic: \
-     %{ansi|std=c*|std=iso9899\\:199409:values-Xc.o%s; :values-Xa.o%s} \
-     %{std=c90|std=gnu90:values-xpg4.o%s; :values-xpg6.o%s}}}"
+     %{ \
+	std=c89|std=c90|std=gnu89|std=gnu90:values-Xa.o%s; \
+	ansi|std=c*|std=iso9899\\:199409:values-Xc.o%s; \
+	:values-Xa.o%s} \
+     %{ \
+	std=c89|std=c90|std=gnu89|std=gnu90:; \
+	:values-xpg6.o%s \
+     }}}"
 
 #define STARTFILE_CRTBEGIN_SPEC "%{static:crtbegin.o%s; \
 				   shared|" PIE_SPEC ":crtbeginS.o%s; \
