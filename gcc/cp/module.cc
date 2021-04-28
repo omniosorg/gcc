@@ -1631,7 +1631,7 @@ elf_in::defrost (const char *name)
 	      set_error (errno);
 	  else
 	    {
-	      if (madvise (mapping, hdr.pos, MADV_RANDOM))
+	      if (posix_madvise (mapping, hdr.pos, MADV_RANDOM))
 		goto fail;
 
 	      /* These buffers are never NULL in this case.  */
@@ -1742,7 +1742,7 @@ elf_in::begin (location_t loc)
     }
   /* We'll be hopping over this randomly.  Some systems declare the
      first parm as char *, and other declare it as void *.  */
-  if (madvise (reinterpret_cast <char *> (mapping), size, MADV_RANDOM))
+  if (posix_madvise (reinterpret_cast <char *> (mapping), size, MADV_RANDOM))
     goto fail;
 
   hdr.buffer = (char *)mapping;
