@@ -81332,13 +81332,9 @@ CPU_OPT_EXT_RANDOM=config/${cpu_opt_ext_random}
 CPU_OPT_BITS_RANDOM=config/${cpu_opt_bits_random}
 
 
-
-
-
-
-
-
-
+case "${target}" in *-*-solaris2*)
+        EXTRA_CXX_FLAGS="$EXTRA_CXX_FLAGS -D_TS_ERRNO"
+esac
 
 
 # Determine cross-compile flags and AM_CONDITIONALs.
