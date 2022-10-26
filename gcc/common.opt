@@ -2191,6 +2191,10 @@ fomit-frame-pointer
 Common Var(flag_omit_frame_pointer) Optimization
 When possible do not generate stack frames.
 
+fforce-omit-frame-pointer
+Common Var(flag_force_omit_frame_pointer) Optimization
+When possible, do not generate stack frames. Hinders debugging with mdb and dtrace.
+
 fopt-info
 Common Var(flag_opt_info) Optimization
 Enable all optimization info dumps on stderr.
