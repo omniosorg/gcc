@@ -448,6 +448,7 @@ CPPINC = -I$(srcdir)/../libcpp/include
 
 CODYLIB = ../libcody/libcody.a
 CODYINC = -I$(srcdir)/../libcody
+NETLIBS = @NETLIBS@
 
 # Where to find decNumber
 enable_decimal_float = @enable_decimal_float@
@@ -1158,7 +1159,7 @@ BUILD_LIBDEPS= $(BUILD_LIBIBERTY)
 # How to link with both our special library facilities
 # and the system's installed libraries.
 LIBS = @LIBS@ libcommon.a $(CPPLIB) $(LIBINTL) $(LIBICONV) $(LIBBACKTRACE) \
-	$(LIBIBERTY) $(LIBDECNUMBER) $(HOST_LIBS)
+	$(LIBIBERTY) $(LIBDECNUMBER) $(NETLIBS) $(HOST_LIBS)
 BACKENDLIBS = $(ISLLIBS) $(GMPLIBS) $(PLUGINLIBS) $(HOST_LIBS) \
 	$(ZLIB) $(ZSTD_LIB)
 # Any system libraries needed just for GNAT.
