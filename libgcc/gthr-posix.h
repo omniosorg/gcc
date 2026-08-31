@@ -204,13 +204,13 @@ __gthread_active (void)
   static volatile int __gthread_active_var = -1;
   return &__gthread_active_var;
 }
-#pragma GCC visibility pop
 
 __GTHREAD_INLINE void
 __gthread_trigger (void)
 {
   *__gthread_active () = 1;
 }
+#pragma GCC visibility pop
 
 #pragma GCC visibility push(hidden)
 __GTHREAD_INLINE int
