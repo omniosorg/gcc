@@ -44,7 +44,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   ctype<char>::ctype(__c_locale, const mask* __table, bool __del,
 		     size_t __refs)
-  : facet(__refs), _M_del(__table != 0 && __del),
+  : facet(__refs), _M_c_locale_ctype(_S_get_c_locale()),
+  _M_del(__table != 0 && __del),
   _M_toupper(__trans_upper), _M_tolower(__trans_lower),
   _M_table(__table ? __table : classic_table())
   {
@@ -55,7 +56,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   }
 
   ctype<char>::ctype(const mask* __table, bool __del, size_t __refs)
-  : facet(__refs), _M_del(__table != 0 && __del),
+  : facet(__refs), _M_c_locale_ctype(_S_get_c_locale()),
+  _M_del(__table != 0 && __del),
   _M_toupper(__trans_upper), _M_tolower(__trans_lower),
   _M_table(__table ? __table : classic_table())
   {
