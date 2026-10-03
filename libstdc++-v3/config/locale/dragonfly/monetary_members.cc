@@ -60,10 +60,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   char lconv2char(char *conv, char def)
   {
-    wchar_t w = def;
+    char w = def;
     const size_t tlen = strlen(conv);
     if (tlen == 1)
-      w = (wchar_t) conv[0];
+      w = conv[0];
     return w;
   }
 
