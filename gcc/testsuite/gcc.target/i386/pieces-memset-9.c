@@ -2,6 +2,7 @@
 /* { dg-options "-O2 -march=x86-64 -mavx512f -mtune=generic" } */
 /* Cope with --enable-frame-pointer, Solaris/x86 -mstackrealign default.  */
 /* { dg-additional-options "-fomit-frame-pointer -mno-stackrealign" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern char *dst;
 

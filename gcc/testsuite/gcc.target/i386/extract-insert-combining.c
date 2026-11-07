@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-msse4.2 -O3" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-times "(?:vmovd|movd)\[ \\t\]+\[^\{\n\]*%xmm\[0-9\]" 3 } } */
 /* { dg-final { scan-assembler-times "(?:vpaddd|paddd)\[ \\t\]+\[^\{\n\]*%xmm\[0-9\]" 2 } } */
 /* { dg-final { scan-assembler-times "(?:vpinsrd|pinsrd)\[ \\t\]+\[^\{\n\]*%xmm\[0-9\]" 1 } } */

@@ -1,6 +1,7 @@
 /* PR target/98060 */
 /* { dg-do compile } */
 /* { dg-options "-O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 /* { dg-final { scan-assembler-not "set" } } */
 /* { dg-final { scan-assembler-times "adc"  4 } } */

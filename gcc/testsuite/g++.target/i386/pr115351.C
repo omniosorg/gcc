@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O3 -std=c++11" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 struct complex
 {

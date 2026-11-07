@@ -1,5 +1,6 @@
 /* { dg-do compile { target lp64 } } */
 /* { dg-options "-O3 -fno-vect-cost-model -fdump-tree-slp2-details" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 struct x { double d[2]; };
 

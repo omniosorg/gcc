@@ -1,6 +1,7 @@
 /* PR middle-end/47735 */
 /* { dg-do compile } */
 /* { dg-options "-O2 -fomit-frame-pointer" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 unsigned
 mulh (unsigned a, unsigned b)

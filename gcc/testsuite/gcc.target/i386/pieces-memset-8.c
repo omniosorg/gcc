@@ -2,6 +2,7 @@
 /* { dg-options "-O2 -mno-avx2 -mavx -mtune=generic -mno-stackrealign" } */
 /* Cope with --enable-frame-pointer.  */
 /* { dg-additional-options "-fomit-frame-pointer" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern char *dst;
 

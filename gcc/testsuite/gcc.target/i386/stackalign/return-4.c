@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-mpreferred-stack-boundary=4 -O" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not "and\[lq\]?\[^\\n\]*-64,\[^\\n\]*sp" } } */
 /* We only guarantee we won't generate the stack alignment when
    optimizing.  When not optimizing, the return value will be assigned

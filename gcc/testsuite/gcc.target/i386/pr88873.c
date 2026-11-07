@@ -1,5 +1,6 @@
 /* { dg-do compile  { target int128 } } */
 /* { dg-options "-O2 -march=cascadelake" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef struct { double x, y; } s_t;
 

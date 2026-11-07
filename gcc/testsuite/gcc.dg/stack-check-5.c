@@ -7,6 +7,7 @@
 /* Otherwise the S/390 back-end might save the stack pointer in f2 ()
    into an FPR.  */
 /* { dg-additional-options "-msoft-float" { target { s390x-*-* } } } */
+/* { dg-skip-if "-msave-args changes the frame layout" { *-*-* } "-msave-args" "" } */
 
 extern void foo (char *);
 extern void bar (void);
