@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O2 -fdump-rtl-pro_and_epilogue" } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 
 /* Avoid inserting sub between test-je-jle to change EFlags, lea should be used here
         xorl    %eax, %eax

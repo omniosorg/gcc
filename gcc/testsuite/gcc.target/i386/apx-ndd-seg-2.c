@@ -1,6 +1,7 @@
 /* PR target/113711 */
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-mapxf -O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 #include <stdint.h>
 

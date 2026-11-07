@@ -1,5 +1,6 @@
 /* { dg-do compile { target { lp64 } } } */
 /* { dg-options "-O2 -mtune=intel" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 float f(float x)
 {
     union {float f; unsigned i;} u = {x};

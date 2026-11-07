@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O2 -fno-if-conversion -fno-if-conversion2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not {(?n)movq.*r} } } */
 
 void __cond_swap(double* __x, double* __y) {

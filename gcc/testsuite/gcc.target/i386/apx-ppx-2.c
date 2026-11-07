@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O1 -mapx-features=ppx -fno-omit-frame-pointer" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 /* { dg-final { scan-assembler "pushp" } } */
 /* { dg-final { scan-assembler "popp" } } */

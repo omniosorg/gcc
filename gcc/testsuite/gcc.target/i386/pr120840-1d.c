@@ -1,5 +1,6 @@
 /* { dg-do run } */
 /* { dg-options "-save-temps -O2 -fno-omit-frame-pointer -mtune-ctrl=prologue_using_move,epilogue_using_move,use_leave" } */
+/* { dg-skip-if "-msave-args requires a frame pointer" { *-*-* } "-msave-args" "" } */
 
 #define DONT_SAVE_REGS1 __attribute__((preserve_none))
 #define DONT_SAVE_REGS2 __attribute__((preserve_none))

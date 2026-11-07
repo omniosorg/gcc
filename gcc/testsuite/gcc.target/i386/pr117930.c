@@ -1,6 +1,7 @@
 /* PR target/117930 */
 /* { dg-do compile } */
 /* { dg-options "-O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not "sub\[bwlq\]\t" } } */
 /* { dg-final { scan-assembler-not "add\[bwlq\]\t" } } */
 /* { dg-final { scan-assembler-not "lea\[lq\]\t" } } */

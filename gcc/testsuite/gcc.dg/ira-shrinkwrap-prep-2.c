@@ -1,5 +1,6 @@
 /* { dg-do compile { target { { { i?86-*-* x86_64-*-* } && lp64 } || { { powerpc*-*-* && lp64 } || { arm_nothumb || { aarch64*-*-* && lp64 } } } } } } */
 /* { dg-options "-O3 -fdump-rtl-ira -fdump-rtl-pro_and_epilogue -fno-ipa-ra"  } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 
 long __attribute__((noinline, noclone))
 foo (long a)

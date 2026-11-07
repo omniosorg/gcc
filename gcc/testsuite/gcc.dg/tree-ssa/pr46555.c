@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -fdump-tree-optimized-details -fdump-rtl-pro_and_epilogue" } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 /* PR tree-optimization/46555 */
 /* Here should not remove the forwarder block (or rather recreate it and not
    remove it again). This improves expansion to RTL as there is one less copy

@@ -1,5 +1,6 @@
 /* { dg-do compile { target lp64 } } */
 /* { dg-options "-O2 -mmemset-strategy=rep_8byte:-1:align -fdump-rtl-pro_and_epilogue -fno-stack-protector" } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 
 enum machine_mode
 {

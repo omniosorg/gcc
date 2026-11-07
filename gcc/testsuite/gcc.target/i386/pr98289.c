@@ -2,6 +2,7 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-require-effective-target freorder } */
 /* { dg-options "-O2 -freorder-blocks-and-partition -fdump-rtl-pro_and_epilogue-details" } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-rtl-dump-times "Performing shrink-wrapping" 4 "pro_and_epilogue" } } */
 
 int bar (void) __attribute__((cold));

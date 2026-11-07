@@ -2,6 +2,7 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -fno-stack-protector -masm=att" } */
 /* { dg-additional-options "-fno-pic" { target { ! *-*-darwin* } } } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-times "\tjn*s\t" 3 } } */
 /* { dg-final { scan-assembler-times "\tcmp\[lq]\t%" 1 } } */
 /* { dg-final { scan-assembler-times "\tcmp\[lq]\t\\\$-1234," 1 } } */

@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -march=haswell -mno-stackrealign" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 unsigned short
 UMVLine16Y_11 (short unsigned int * Pic, int y, int width)

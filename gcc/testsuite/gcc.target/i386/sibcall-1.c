@@ -1,5 +1,6 @@
 /* { dg-do compile { target { { ! x32 }  && nonpic } } } */
 /* { dg-options "-O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern int (*foo)(int);
 

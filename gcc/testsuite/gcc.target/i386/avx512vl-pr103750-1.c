@@ -1,6 +1,7 @@
 /* PR target/103750 */
 /* { dg-do compile }  */
 /* { dg-options "-O2 -mavx512vl" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not "and" } } */
 
 #include <immintrin.h>

@@ -1,6 +1,7 @@
 /* PR target/112824 */
 /* { dg-do compile } */
 /* { dg-options "-std=c++23 -O3 -march=skylake-avx512 -mprefer-vector-width=512" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not "vmov.*\[ \\t\]+\[^\n\]*%rsp" } } */
 
 #include "pr112824-1.C"
