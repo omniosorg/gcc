@@ -6653,6 +6653,18 @@ gen_push (rtx arg, bool ppx_p)
   return ppx_p ? gen_pushp_di (stack, arg) : gen_rtx_SET (stack, arg);
 }
 
+/* Generate a push of REG for -msave-args.  These run before the code that
+   parameters' debug locations depend on, so use the frame alias set to show
+   that they cannot clobber memory that those locations refer to.  */
+
+static rtx
+gen_save_args_push (rtx reg)
+{
+  rtx pat = gen_push (reg);
+  set_mem_alias_set (SET_DEST (pat), get_frame_alias_set ());
+  return pat;
+}
+
 rtx
 gen_pushfl (void)
 {
@@ -7641,7 +7653,8 @@ ix86_emit_save_regs (void)
       for (i = start; i < start + frame.nmsave_args; i++)
 	{
 	  regno = x86_64_int_parameter_registers[i];
-	  insn = emit_insn (gen_push (gen_rtx_REG (word_mode, regno)));
+	  insn = emit_insn (gen_save_args_push (gen_rtx_REG (word_mode,
+							     regno)));
 	  RTX_FRAME_RELATED_P (insn) = 1;
 	}
       if (frame.nmsave_args % 2 != 0)
@@ -9580,7 +9593,9 @@ ix86_expand_prologue (void)
     {
       /* Note: AT&T enter does NOT have reversed args.  Enter is probably
          slower on all targets.  Also sdb didn't like it.  */
-      insn = emit_insn (gen_push (hard_frame_pointer_rtx));
+      insn = emit_insn (TARGET_SAVE_ARGS
+			? gen_save_args_push (hard_frame_pointer_rtx)
+			: gen_push (hard_frame_pointer_rtx));
       RTX_FRAME_RELATED_P (insn) = 1;
 
       if (m->fs.sp_offset == frame.hard_frame_pointer_offset)

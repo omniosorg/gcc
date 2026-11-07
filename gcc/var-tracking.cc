@@ -5675,6 +5675,17 @@ static void
 add_uses (rtx loc, struct count_use_info *cui)
 {
   machine_mode mode = VOIDmode;
+
+  /* A prologue that saves an incoming argument register only reads it.
+     The register has no REG_EXPR, so treating this as a use with no
+     variable would drop the parameter from its register (-msave-args).  */
+  if (REG_P (loc)
+      && !REG_EXPR (loc)
+      && FUNCTION_ARG_REGNO_P (REGNO (loc))
+      && cui->insn
+      && RTX_FRAME_RELATED_P (cui->insn))
+    return;
+
   enum micro_operation_type type = use_type (loc, cui, &mode);
 
   if (type != MO_CLOBBER)
