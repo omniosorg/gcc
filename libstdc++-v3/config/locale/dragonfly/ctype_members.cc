@@ -34,7 +34,16 @@
 #include <cstdio>
 
 #ifndef _ISbit
+#if defined(__illumos__)
+// On illumos the ctype_base::mask values (config/os/solaris/ctype_base.h)
+// are the _IS* bits from <iso/ctype_iso.h>, which are single bits in the
+// range 1 << 0 .. 1 << 15 (_ISUPPER = 1 .. _ISPRINT = 0x8000).  The glibc
+// bit layout below does not cover _ISPUNCT, _ISCNTRL, _ISBLANK and
+// _ISXDIGIT at all, so is(punct), is(blank) etc. always returned false.
+#define _ISbit(bit) (1 << (bit))
+#else
 #define _ISbit(bit) ((bit) < 8 ? ((1 << (bit)) << 8) : ((1 << (bit)) >> 8))
+#endif
 #endif
 
 namespace std _GLIBCXX_VISIBILITY(default)
@@ -136,8 +145,14 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   }
 
 /*
- * Taken verbatim from config/locale/generic/ctype_members.cc.  DragonFly
+ * Adapted from config/locale/generic/ctype_members.cc.  DragonFly
  * implements these in config/os/bsd/dragonfly/ctype_inline.h.
+ *
+ * Unlike the generic model, this facet carries its own locale_t in
+ * _M_c_locale_ctype, so classify with iswctype_l() in that locale rather
+ * than with iswctype() in whatever the global C locale happens to be;
+ * otherwise ctype<wchar_t> for a named locale (e.g. "de_DE.UTF-8") only
+ * recognises ASCII.
  */
 #if defined(__illumos__)
   bool
@@ -150,7 +165,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     const size_t __bitmasksize = 15;
     for (size_t __bitcur = 0; __bitcur <= __bitmasksize; ++__bitcur)
       if (__m & _M_bit[__bitcur]
-          && iswctype(__c, _M_wmask[__bitcur]))
+          && iswctype_l(__c, _M_wmask[__bitcur],
+			(locale_t)_M_c_locale_ctype))
         {
           __ret = true;
           break;
@@ -169,7 +185,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
         const size_t __bitmasksize = 15;
         mask __m = 0;
         for (size_t __bitcur = 0; __bitcur <= __bitmasksize; ++__bitcur)
-          if (iswctype(*__lo, _M_wmask[__bitcur]))
+          if (iswctype_l(*__lo, _M_wmask[__bitcur],
+			 (locale_t)_M_c_locale_ctype))
             __m |= _M_bit[__bitcur];
         *__vec = __m;
       }
@@ -277,7 +294,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	 __j < sizeof(_M_widen) / sizeof(wint_t); ++__j)
       _M_widen[__j] = btowc(__j);
 
-    for (size_t __k = 0; __k <= 11; ++__k)
+    // Fill the whole table: do_is() above scans all 16 entries, and
+    // _ISPRINT is 1 << 15 on illumos.  Leaving entries uninitialised made
+    // do_is() consult stack garbage.
+    for (size_t __k = 0; __k <= 15; ++__k)
       {
 	_M_bit[__k] = static_cast<mask>(_ISbit(__k));
 	_M_wmask[__k] = _M_convert_to_wmask(_M_bit[__k]);

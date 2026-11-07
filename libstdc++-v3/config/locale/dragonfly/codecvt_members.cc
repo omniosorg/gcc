@@ -38,8 +38,20 @@ namespace std _GLIBCXX_VISIBILITY(default)
 {
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
-  // Specializations.
 #ifdef _GLIBCXX_USE_WCHAR_T
+namespace
+{
+  // RAII type for changing and restoring the current thread's locale.
+  struct Guard
+  {
+    explicit Guard(__c_locale loc)
+    : old((__c_locale)uselocale((locale_t)loc)) { }
+    ~Guard() { uselocale((locale_t)old); }
+    __c_locale old;
+  };
+}
+
+  // Specializations.
   codecvt_base::result
   codecvt<wchar_t, char, mbstate_t>::
   do_out(state_type& __state, const intern_type* __from,
@@ -47,20 +59,23 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	 extern_type* __to, extern_type* __to_end,
 	 extern_type*& __to_next) const
   {
-    result __ret = ok;
     state_type __tmp_state(__state);
-
-    __c_locale __old = (__c_locale)uselocale((locale_t)_M_c_locale_codecvt);
+    Guard g(_M_c_locale_codecvt);
 
     // wcsnrtombs is *very* fast but stops if encounters NUL characters:
     // in case we fall back to wcrtomb and then continue, in a loop.
     // NB: wcsnrtombs is a GNU extension
-    for (__from_next = __from, __to_next = __to;
-	 __from_next < __from_end && __to_next < __to_end
-	 && __ret == ok;)
+    __from_next = __from;
+    __to_next = __to;
+    while (__from_next < __from_end)
       {
-	const intern_type* __from_chunk_end = wmemchr(__from_next, L'\0',
-						      __from_end - __from_next);
+	// Checked here rather than in the loop condition so that an empty
+	// destination range yields partial, not ok (PR libstdc++/37475).
+	if (__to_next >= __to_end)
+	  return partial;
+
+	const intern_type* __from_chunk_end
+	  = wmemchr(__from_next, L'\0', __from_end - __from_next);
 	if (!__from_chunk_end)
 	  __from_chunk_end = __from_end;
 
@@ -72,16 +87,30 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  {
 	    // In case of error, in order to stop at the exact place we
 	    // have to start again from the beginning with a series of
-	    // wcrtomb.
-	    for (; __from < __from_next; ++__from)
-	      __to_next += wcrtomb(__to_next, *__from, &__tmp_state);
+	    // wcrtomb.  Don't rely on __from_next having been advanced to
+	    // the offending character: C11 7.29.6.4.2 requires that, and
+	    // the illumos UTF-8 converter does it, but its single-byte
+	    // converter (__wcsnrtombs_ascii in libc/port/locale/none.c)
+	    // leaves *src untouched on EILSEQ.  Everything before the bad
+	    // character fitted into [__to_next, __to_end) already.
+	    for (__from_next = __from; __from_next < __from_chunk_end;
+		 ++__from_next)
+	      {
+		extern_type __buf[MB_LEN_MAX];
+		const size_t __n = wcrtomb(__buf, *__from_next, &__tmp_state);
+		if (__n == static_cast<size_t>(-1)
+		    || __n > static_cast<size_t>(__to_end - __to_next))
+		  break;
+		memcpy(__to_next, __buf, __n);
+		__to_next += __n;
+	      }
 	    __state = __tmp_state;
-	    __ret = error;
+	    return error;
 	  }
 	else if (__from_next && __from_next < __from_chunk_end)
 	  {
 	    __to_next += __conv;
-	    __ret = partial;
+	    return partial;
 	  }
 	else
 	  {
@@ -89,13 +118,13 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	    __to_next += __conv;
 	  }
 
-	if (__from_next < __from_end && __ret == ok)
+	if (__from_next < __from_end)
 	  {
 	    extern_type __buf[MB_LEN_MAX];
 	    __tmp_state = __state;
 	    const size_t __conv2 = wcrtomb(__buf, *__from_next, &__tmp_state);
 	    if (__conv2 > static_cast<size_t>(__to_end - __to_next))
-	      __ret = partial;
+	      return partial;
 	    else
 	      {
 		memcpy(__to_next, __buf, __conv2);
@@ -106,9 +135,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  }
       }
 
-    uselocale((locale_t)__old);
-
-    return __ret;
+    return ok;
   }
 
   codecvt_base::result
@@ -118,22 +145,24 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	intern_type* __to, intern_type* __to_end,
 	intern_type*& __to_next) const
   {
-    result __ret = ok;
     state_type __tmp_state(__state);
-
-    __c_locale __old = (__c_locale)uselocale((locale_t)_M_c_locale_codecvt);
+    Guard g(_M_c_locale_codecvt);
 
     // mbsnrtowcs is *very* fast but stops if encounters NUL characters:
     // in case we store a L'\0' and then continue, in a loop.
     // NB: mbsnrtowcs is a GNU extension
-    for (__from_next = __from, __to_next = __to;
-	 __from_next < __from_end && __to_next < __to_end
-	 && __ret == ok;)
+    __from_next = __from;
+    __to_next = __to;
+    while (__from_next < __from_end)
       {
-	const extern_type* __from_chunk_end;
-	__from_chunk_end = static_cast<const extern_type*>(memchr(__from_next, '\0',
-								  __from_end
-								  - __from_next));
+	// Checked here rather than in the loop condition so that an empty
+	// destination range yields partial, not ok (PR libstdc++/37475).
+	if (__to_next >= __to_end)
+	  return partial;
+
+	const extern_type* __from_chunk_end
+	  = static_cast<const extern_type*>(memchr(__from_next, '\0',
+						   __from_end - __from_next));
 	if (!__from_chunk_end)
 	  __from_chunk_end = __from_end;
 
@@ -156,13 +185,13 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	      }
 	    __from_next = __from;
 	    __state = __tmp_state;
-	    __ret = error;
+	    return error;
 	  }
 	else if (__from_next && __from_next < __from_chunk_end)
 	  {
 	    // It is unclear what to return in this case (see DR 382).
 	    __to_next += __conv;
-	    __ret = partial;
+	    return partial;
 	  }
 	else
 	  {
@@ -170,7 +199,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	    __to_next += __conv;
 	  }
 
-	if (__from_next < __from_end && __ret == ok)
+	if (__from_next < __from_end)
 	  {
 	    if (__to_next < __to_end)
 	      {
@@ -180,13 +209,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 		*__to_next++ = L'\0';
 	      }
 	    else
-	      __ret = partial;
+	      return partial;
 	  }
       }
 
-    uselocale((locale_t)__old);
-
-    return __ret;
+    return ok;
   }
 
   int
