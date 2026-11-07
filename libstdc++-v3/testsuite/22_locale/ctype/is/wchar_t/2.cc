@@ -1,4 +1,4 @@
-// { dg-do run { xfail { ! { *-*-linux* *-*-gnu* } } } }
+// { dg-do run { xfail { ! { *-*-linux* *-*-gnu* *-*-solaris2* } } } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 
 // Copyright (C) 2000-2025 Free Software Foundation, Inc.
