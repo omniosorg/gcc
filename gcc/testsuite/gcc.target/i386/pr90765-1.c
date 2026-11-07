@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -mavx512f" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not "and\[lq\]?\[\\t \]*\\$-64,\[\\t \]*%\[re\]?sp" } } */
 
 typedef int __v16si __attribute__ ((__vector_size__ (64)));

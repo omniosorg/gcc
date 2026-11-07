@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -mtune=znver5 -march=x86-64 -mavx2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern char *dst, *src;
 

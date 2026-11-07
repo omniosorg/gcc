@@ -1,5 +1,6 @@
 /* { dg-do compile { target int128 } } */
 /* { dg-options "-O2 -msse2 -mtune=core2 -mtune-ctrl=sse_unaligned_store_optimal -dp" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 struct foo
 {

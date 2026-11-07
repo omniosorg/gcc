@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-mavx512f -O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-times {(?n)vmovd[ \t]+} 3 } } */
 /* { dg-final { scan-assembler-not {(?n)movq[ \t]+} } } */
 

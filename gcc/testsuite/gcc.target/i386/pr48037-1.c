@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O -fno-math-errno" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef double __m128d __attribute__((vector_size(16)));
 __m128d vsqrt1 (__m128d const x)

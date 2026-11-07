@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O3 -mapxf" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 int foo(int a, int b, int c, int d)
 {

@@ -1,6 +1,7 @@
 /* PR target/113609 */
 /* { dg-do compile } */
 /* { dg-options "-O2 -march=x86-64-v4" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-times "\[ \\t\]+sete" 4 } } */
 /* { dg-final { scan-assembler-times "\[ \\t\]+setne" 4 } } */
 /* { dg-final { scan-assembler-times "\[ \\t\]+je" 4 } } */

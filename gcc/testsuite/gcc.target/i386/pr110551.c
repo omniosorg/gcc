@@ -1,5 +1,6 @@
 /* { dg-do compile { target int128 } } */
 /* { dg-options "-O2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef unsigned long long uint64_t;
 

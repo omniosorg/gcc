@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -march=x86-64 -mavx512f -mtune-ctrl=avx512_store_by_pieces" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern char *dst;
 

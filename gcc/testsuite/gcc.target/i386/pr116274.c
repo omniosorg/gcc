@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O3 -fno-vect-cost-model -msse4.1" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 struct aq { long x,y; };
 long testq(struct aq a) { return a.x+a.y; }

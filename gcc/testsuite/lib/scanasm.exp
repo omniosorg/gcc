@@ -1023,6 +1023,15 @@ proc check-function-bodies { args } {
 	}
     }
 
+    # On illumos, -msave-args forces a frame pointer and stores the integer
+    # argument registers to the stack in every prologue (and disables
+    # shrink-wrapping), so no upstream function body can match.  The same
+    # tests still run on the plain -m64 multilib.
+    if { [check-flags [list "" { *-*-* } { "-msave-args" } { "" }]] } {
+	unsupported "[testname-for-summary] check-function-bodies with -msave-args"
+	return
+    }
+
     set xfail_all 0
     if { [llength $args] >= 4 } {
 	switch [dg-process-target [lindex $args 3]] {

@@ -1,5 +1,6 @@
 /* { dg-do compile { target lp64 } } */
 /* { dg-options "-O2 -msse2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 #include <emmintrin.h>
 

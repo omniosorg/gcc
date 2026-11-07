@@ -2,6 +2,7 @@
 /* { dg-options "-O2 -fomit-frame-pointer -mmmx -msse -mno-sse2" } */
 /* { dg-additional-options "-fno-common" { target *-*-darwin* } } */
 /* { dg-additional-options "-mdynamic-no-pic" { target { ia32 && *-*-darwin* } } } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 #include <xmmintrin.h>
 

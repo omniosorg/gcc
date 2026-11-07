@@ -1,5 +1,6 @@
 /* { dg-do compile { target { { { i?86-*-* x86_64-*-* } && lp64 } || { arm_thumb2 } } } } */
 /* { dg-options "-O2 -fdump-rtl-pro_and_epilogue"  } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 
 int foo (int *p1, int *p2);
 

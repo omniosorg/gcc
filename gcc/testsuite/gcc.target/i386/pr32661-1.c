@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O2 -fomit-frame-pointer" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef long long __m128i __attribute__ ((__vector_size__ (16)));
 

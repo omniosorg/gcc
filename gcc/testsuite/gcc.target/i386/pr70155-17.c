@@ -1,5 +1,6 @@
 /* { dg-do compile { target int128 } } */
 /* { dg-options "-O2 -msse2 -mtune=generic -dp" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern __int128 a, b, c, d, e, f;
 

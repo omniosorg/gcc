@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -mfpmath=sse -msse2" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-times "comiss" 9 } } */
 /* { dg-final { scan-assembler-times "set" 9 } } */
 

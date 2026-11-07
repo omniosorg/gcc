@@ -1,5 +1,6 @@
 /* { dg-do compile { target i?86-*-* x86_64-*-* } } */
 /* { dg-options "-O2 -mavx" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef long long __m256i __attribute__ ((__vector_size__ (32), __may_alias__));
 

@@ -2,6 +2,7 @@
 // { dg-require-effective-target c++11 }
 // { dg-additional-options "-O3" }
 // { dg-additional-options "-O3 -m32 -mno-sse" { target { i?86-*-* x86_64-*-* } } }
+// { dg-skip-if "-msave-args warns in 32-bit mode" { *-*-* } "-msave-args" "" }
 
 void *operator new(__SIZE_TYPE__, void *a) { return a; }
 class b {

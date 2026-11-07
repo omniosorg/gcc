@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-mavx -mno-avx2 -O2 " } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 /* { dg-final { scan-assembler-not {(?n)(%rsp)} } } */
 
 typedef unsigned long long v4di __attribute((vector_size(32)));

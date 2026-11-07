@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -mno-avx -msse2 -mtune=generic" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 extern char *dst;
 

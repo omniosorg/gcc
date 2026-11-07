@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-O2 -favoid-store-forwarding" } */
+/* { dg-skip-if "-msave-args prologue" { *-*-* } "-msave-args" "" } */
 
 typedef union {
     char arr_8[8];

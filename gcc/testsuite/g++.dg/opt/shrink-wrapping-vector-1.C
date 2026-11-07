@@ -1,6 +1,7 @@
 // { dg-do compile { target { { { i?86-*-* x86_64-*-* } && { ! ia32 } } || { powerpc*-*-* aarch64*-*-* riscv*-*-* }  } } }
 // { dg-options "-O2  -fdump-rtl-pro_and_epilogue"  }
 // { dg-skip-if "requires hosted libstdc++ for vector" { ! hostedlib } }
+// { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" }
 
 // PR rtl-optimization/118502
 

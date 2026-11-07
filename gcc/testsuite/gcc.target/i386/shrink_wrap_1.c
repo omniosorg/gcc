@@ -1,5 +1,6 @@
 /* { dg-do compile { target { ! ia32 } } } */
 /* { dg-options "-O2 -fdump-rtl-pro_and_epilogue -fno-stack-protector" } */
+/* { dg-skip-if "no shrink-wrapping with -msave-args" { *-*-* } "-msave-args" "" } */
 
 enum machine_mode
 {
