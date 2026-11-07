@@ -1558,12 +1558,17 @@ proc check_effective_target_shared { } {
 # Return 1 if -pie, -fpie and -fPIE are supported, 0 otherwise.
 
 proc check_effective_target_pie { } {
+    # The illumos linker has no PIE support, and the driver rejects -pie.
+    if { [istarget *-*-solaris2*] } {
+	return [check_no_compiler_messages pie_link executable {
+	    int main (void) { return 0; }
+	} "-pie -fpie"]
+    }
     if { [istarget *-*-darwin\[912\]*]
 	 || [istarget *-*-dragonfly*]
 	 || [istarget *-*-freebsd*]
 	 || [istarget *-*-linux*]
 	 || [istarget arm*-*-uclinuxfdpiceabi]
-	 || [istarget *-*-solaris2*]
 	 || [istarget *-*-gnu*]
 	 || [istarget *-*-amdhsa]} {
 	return 1;

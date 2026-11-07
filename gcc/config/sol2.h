@@ -398,12 +398,18 @@ along with GCC; see the file COPYING3.  If not see
 #define LINK_EH_SPEC "%{!static|static-pie:--eh-frame-hdr} "
 #endif
 
+#if defined(HAVE_LD_PIE)
 #if !HAVE_SOLARIS_LD
 /* Assert -z text by default to match Solaris ld.  */
 #define LD_PIE_SPEC "-pie %{!mimpure-text:-z text}"
 #else
 /* Solaris ld needs -z type=pie instead of -pie.  */
 #define LD_PIE_SPEC "-z type=pie %{mimpure-text:-z textoff}"
+#endif
+#else
+/* Error out if some part of PIE support is missing.  */
+#define LINK_PIE_SPEC \
+  "%{no-pie:} %{pie:%e-pie is not supported in this configuration} "
 #endif
 
 /* collect2.cc can only parse GNU nm -n output.  Solaris nm needs -png to

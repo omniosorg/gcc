@@ -32910,8 +32910,10 @@ elif test x$gcc_cv_ld != x; then
   else
     case "$target" in
       *-*-solaris2*)
-	# Solaris 11.3 added PIE support.
-	gcc_cv_ld_pie=yes
+	# Solaris 11.3 added PIE support, the illumos linker lacks it.
+	if $gcc_cv_ld -z help 2>&1 | grep -- type.*pie > /dev/null; then
+	  gcc_cv_ld_pie=yes
+	fi
 	;;
     esac
   fi
