@@ -72,7 +72,8 @@
 # define unlink(x)
 #endif
 
-#if defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__
+#if defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ \
+  || defined __illumos__
 # define ISO_8859(part,langTERR) #langTERR ".ISO8859-" #part
 #else
 # define ISO_8859(part,langTERR) ((part) == 15 ?\
