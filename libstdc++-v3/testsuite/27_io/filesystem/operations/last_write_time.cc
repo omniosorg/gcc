@@ -22,6 +22,7 @@
 // 15.25 Permissions [fs.op.last_write_time]
 
 #include <filesystem>
+#include <cerrno>
 #include <limits>
 #include <testsuite_fs.h>
 #include <testsuite_hooks.h>
@@ -85,12 +86,25 @@ test01()
   ts[0].tv_nsec = UTIME_NOW;
   ts[1].tv_sec = std::numeric_limits<std::time_t>::max() - 1;
   ts[1].tv_nsec = 0;
-  VERIFY( !::utimensat(AT_FDCWD, p.c_str(), ts, 0) );
+  if (::utimensat(AT_FDCWD, p.c_str(), ts, 0) != 0)
+    {
+      // illumos ZFS rejects timestamps outside the 32-bit time_t range.
+      VERIFY( errno == EOVERFLOW );
+      puts("Filesystem rejects far-future timestamps, "
+	   "can't test for overflow on this target.");
+      return;
+    }
 #elif _GLIBCXX_HAVE_UTIME_H
   ::utimbuf times;
   times.modtime = std::numeric_limits<std::time_t>::max() - 1;
   times.actime = std::numeric_limits<std::time_t>::max() - 1;
-  VERIFY( !::utime(p.string().c_str(), &times) );
+  if (::utime(p.string().c_str(), &times) != 0)
+    {
+      VERIFY( errno == EOVERFLOW );
+      puts("Filesystem rejects far-future timestamps, "
+	   "can't test for overflow on this target.");
+      return;
+    }
 #else
   puts("No utimensat or utime, giving up.");
   return;

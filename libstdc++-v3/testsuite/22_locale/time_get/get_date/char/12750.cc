@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos is_IS date format is %e.%m.%Y, not %a %e.%b %Y" { *-*-solaris2* } }
 // { dg-require-namedlocale "is_IS.ISO8859-1" }
 
 // 2003-10-27 Paolo Carlini  <pcarlini@suse.de>

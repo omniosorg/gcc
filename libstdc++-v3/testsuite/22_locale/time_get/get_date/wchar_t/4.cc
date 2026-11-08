@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos zh_TW date format is %Y/%m/%e, without CJK era/date characters" { *-*-solaris2* } }
 // { dg-require-namedlocale "zh_TW.UTF-8" }
 
 // 2003-12-17  Paolo Carlini  <pcarlini@suse.de>

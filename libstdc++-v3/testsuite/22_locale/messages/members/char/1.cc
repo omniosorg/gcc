@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "generic messages model has no catalog support" { *-*-solaris2* } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 
 // 2001-07-17 Benjamin Kosnik  <bkoz@redhat.com>

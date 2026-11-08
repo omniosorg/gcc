@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos pt_PT has a thousands separator (U+00A0) and grouping" { *-*-solaris2* } }
 // { dg-require-namedlocale "pt_PT.ISO8859-15" }
 
 // 2001-01-24 Benjamin Kosnik  <bkoz@redhat.com>

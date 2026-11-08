@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos es_ES abbreviated weekday is 'dom.' not 'dom'" { *-*-solaris2* } }
 // { dg-require-namedlocale "es_ES.ISO8859-15" }
 
 // 2001-09-17 Benjamin Kosnik  <bkoz@redhat.com>

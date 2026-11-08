@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos wchar_t is the byte value in single-byte locales, so the de_DE.ISO8859-15 euro sign is L'\xa4' not L'\x20ac'" { *-*-solaris2* } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 
 // 2001-08-27 Benjamin Kosnik  <bkoz@redhat.com>

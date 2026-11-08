@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos ru_RU abbreviated weekday names differ from glibc" { *-*-solaris2* } }
 // { dg-require-namedlocale "ru_RU.UTF-8" }
 
 // 2010-01-05  Paolo Carlini  <paolo.carlini@oracle.com>

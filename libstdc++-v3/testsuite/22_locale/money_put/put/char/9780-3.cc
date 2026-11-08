@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "expected output is specific to glibc versions; illumos es_ES puts the currency symbol last" { *-*-solaris2* } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 // { dg-require-namedlocale "es_ES.ISO8859-15" }
 
