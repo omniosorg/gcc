@@ -168,7 +168,21 @@ namespace std::chrono
     using head_ptr = shared_ptr<_Node>;
 #endif
     // This is the owning reference to the first tzdb in the list.
+#ifdef __illumos__
+    // Never destroy this.  init_priority has no effect here, and static
+    // destructors in shared objects run before those in the executable,
+    // so a static destructor could otherwise use the freed list.
+    union head_storage
+    {
+      head_ptr ptr;
+      constexpr head_storage() : ptr{nullptr} { }
+      ~head_storage() { }
+    };
+    static head_storage _S_head_storage;
+    static head_ptr& _S_head_owner;
+#else
     static head_ptr _S_head_owner;
+#endif
 
 #if USE_ATOMIC_LIST_HEAD
     // Lock-free access to the head of the list.
@@ -215,8 +229,14 @@ namespace std::chrono
   [[gnu::init_priority(98)]]
   constinit tzdb_list tzdb_list::_Node::_S_the_list(nullptr);
 
+#ifdef __illumos__
+  constinit tzdb_list::_Node::head_storage tzdb_list::_Node::_S_head_storage;
+  constinit tzdb_list::_Node::head_ptr& tzdb_list::_Node::_S_head_owner
+    = tzdb_list::_Node::_S_head_storage.ptr;
+#else
   [[gnu::init_priority(98)]]
   constinit tzdb_list::_Node::head_ptr tzdb_list::_Node::_S_head_owner{nullptr};
+#endif
 
 #if USE_ATOMIC_LIST_HEAD
   [[gnu::init_priority(98)]]
