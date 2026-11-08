@@ -35,6 +35,22 @@ if ![info exists DEFAULT_CFLAGS] then {
 dg-init
 clearcap-init
 
+# illumos deliberately ignores -fomit-frame-pointer unless
+# -fforce-omit-frame-pointer is also given.  Honour what a test asks for.
+# This file is sourced once per target board, so this is undone below.
+if { [istarget *-*-solaris2*] } {
+    rename gcc-dg-test saved-gcc-dg-test
+    proc gcc-dg-test { prog do_what extra_tool_flags } {
+	if { [string match "*-fomit-frame-pointer*" $extra_tool_flags] } {
+	    append extra_tool_flags " -fforce-omit-frame-pointer"
+	}
+	# gcc-dg-test-1 uses upvar 2 to reach dg-test's variables, so run
+	# the original in our caller's frame to keep the frame depth.
+	return [uplevel 1 [list saved-gcc-dg-test $prog $do_what \
+			       $extra_tool_flags]]
+    }
+}
+
 global runtests
 # Special case compilation of vect-args.c so we don't have to
 # replicate it 16 times.
@@ -54,6 +70,11 @@ set tests [prune $tests $srcdir/$subdir/vect-args.c]
 
 # Main loop.
 dg-runtest $tests "" $DEFAULT_CFLAGS
+
+if { [istarget *-*-solaris2*] } {
+    rename gcc-dg-test ""
+    rename saved-gcc-dg-test gcc-dg-test
+}
 
 # All done.
 clearcap-finish
