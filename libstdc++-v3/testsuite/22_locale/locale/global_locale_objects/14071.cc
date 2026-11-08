@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos composite locale names are a/b/c/d/e/f, not the glibc LC_*=...; form" { *-*-solaris2* } }
 // { dg-require-namedlocale "is_IS.ISO8859-1" }
 // { dg-require-namedlocale "en_US.ISO8859-1" }
 

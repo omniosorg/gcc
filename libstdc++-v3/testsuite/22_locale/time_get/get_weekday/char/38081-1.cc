@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos ru_RU abbreviated weekday names differ from glibc" { *-*-solaris2* } }
 // { dg-require-namedlocale "ru_RU.ISO8859-5" }
 
 // Copyright (C) 2010-2025 Free Software Foundation, Inc.

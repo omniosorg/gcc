@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos UTF-8 is limited to 4-byte sequences so MB_CUR_MAX is 4, not 6" { *-*-solaris2* } }
 // { dg-require-namedlocale "en_US.UTF-8" }
 
 // 2003-02-06  Petur Runolfsson  <peturr02@ru.is>
