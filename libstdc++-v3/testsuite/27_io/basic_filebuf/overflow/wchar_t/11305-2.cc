@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos UTF-8 cannot encode code points above 0x1FFFFF" { *-*-solaris2* } }
 // { dg-require-namedlocale "en_US.UTF-8" }
 
 // Copyright (C) 2003-2026 Free Software Foundation, Inc.

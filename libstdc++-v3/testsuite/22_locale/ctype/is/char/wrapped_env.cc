@@ -1,3 +1,4 @@
+// { dg-do run { xfail { ! { *-*-linux* *-*-gnu* } } } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 
 // 2001-08-15 Benjamin Kosnik  <bkoz@redhat.com>

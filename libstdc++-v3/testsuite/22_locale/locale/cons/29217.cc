@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos composite locale names are a/b/c/d/e/f, not the glibc LC_*=...; form, and have 6 categories" { *-*-solaris2* } }
 // { dg-require-namedlocale "en_US.UTF-8" }
 
 // Copyright (C) 2006-2026 Free Software Foundation, Inc.

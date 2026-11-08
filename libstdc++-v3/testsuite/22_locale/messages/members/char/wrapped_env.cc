@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "generic messages model has no catalog support" { *-*-solaris2* } }
 // { dg-require-namedlocale "de_DE.ISO8859-15" }
 // { dg-require-namedlocale "fr_FR.ISO8859-15" }
 // { dg-require-namedlocale "en_US.ISO8859-1" }

@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "generic messages model has no catalog support" { *-*-solaris2* } }
 // { dg-require-namedlocale "fr_FR.ISO8859-15" }
 
 // Copyright (C) 2014-2026 Free Software Foundation, Inc.

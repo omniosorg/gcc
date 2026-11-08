@@ -21,5 +21,6 @@
 
 namespace gnu
 {
-  using std::gets; // { dg-error "has not been declared" }
+  // illumos <iso/stdio_iso.h> declares gets() in namespace std for C++14.
+  using std::gets; // { dg-error "has not been declared" "" { target { ! *-*-solaris2* } } }
 }

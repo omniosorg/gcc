@@ -1,3 +1,4 @@
+// { dg-xfail-run-if "illumos fr_FR abbreviated month is 'avr.' not 'avril'" { *-*-solaris2* } }
 // { dg-do run { target c++20 } }
 // { dg-require-namedlocale "fr_FR.ISO8859-15" }
 // { dg-timeout-factor 2 }
