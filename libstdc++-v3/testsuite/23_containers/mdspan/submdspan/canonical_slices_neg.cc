@@ -1,4 +1,5 @@
 // { dg-do compile { target c++26 } }
+// { dg-skip-if "illumos int8_t is char, which is not a valid extents index type" { *-*-solaris2* } }
 #include <mdspan>
 
 #include <cstdint>
