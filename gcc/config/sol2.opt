@@ -40,10 +40,10 @@ Target
 Pass -z text to linker.
 
 pthread
-Ignore
+Driver
 
 pthreads
-Ignore
+Driver
 
 rdynamic
 Driver
